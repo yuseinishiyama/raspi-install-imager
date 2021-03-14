@@ -14,4 +14,6 @@ network:
         - {{ $address }}
         {{- end }}
         search:
-        - Speedport_W_724V_Typ_A_05011603_06_003
+        {{- range $i, $search := .Nameservers.Search }}
+        - {{ $search }}
+        {{- end }}
