@@ -8,8 +8,7 @@ HOST = pi1
 default: write
 
 gen/$(HOST):
-	touch $@
-	echo "TODO: generate cloud-init configs" > $@
+	go run ./generator
 
 image/$(PREINSTALLED_IMAGE):
 	curl $(DOWNLAOD_URL) -o - | unxz > $@
