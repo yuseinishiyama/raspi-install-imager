@@ -1,11 +1,14 @@
 hosts:
   pi1:
-    ip: 192.168.2.129
+    addresses:
+    - 192.168.2.129/24
     master: true
   pi2:
-    ip: 192.168.2.130
+    addresses:
+    - 192.168.2.130/24
   pi3:
-    ip: 192.168.2.131
+    addresses:
+    - 192.168.2.131/24
 shared:
   user: yuseinishiyama
   ssh_public_keys:

@@ -11,6 +11,6 @@ users:
 - name: {{ .User }}
   sudo: ALL=(ALL) NOPASSWD:ALL
   ssh_authorized_keys:
-{{- range $i, $publicKey := .PublicKeys }}
+  {{- range $i, $publicKey := .PublicKeys }}
   - {{ $publicKey }}
-{{- end }}
+  {{- end }}

@@ -20,8 +20,8 @@ var (
 
 type config struct {
 	Hosts map[string]struct {
-		IP     string
-		Master bool
+		Addresses []string
+		Master    bool
 	}
 	Shared struct {
 		User       string
@@ -62,7 +62,7 @@ func execute() {
 
 	outputDir := path.Join(output, hostname)
 
-	networkConfig := networkConfig{IP: host.IP}
+	networkConfig := networkConfig{Addresses: host.Addresses}
 	if err := networkConfig.generate(outputDir); err != nil {
 		log.Fatalf("failed to render network-config. %v", err)
 	}

@@ -8,7 +8,7 @@ import (
 )
 
 type networkConfig struct {
-	IP string
+	Addresses []string
 }
 
 func (n networkConfig) generate(dir string) error {
