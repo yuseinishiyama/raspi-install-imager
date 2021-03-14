@@ -2,6 +2,7 @@ package main
 
 type networkConfig struct {
 	Addresses   []string
+	Gateway4    string
 	Nameservers Nameservers
 }
 

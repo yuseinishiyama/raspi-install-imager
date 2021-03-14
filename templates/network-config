@@ -7,7 +7,7 @@ network:
       {{- range $i, $address := .Addresses }}
       - {{ $address }}
       {{- end }}
-      gateway4: 192.168.2.1
+      gateway4: {{ .Gateway4 }}
       nameservers:
         addresses:
         {{- range $i, $address := .Nameservers.Addresses }}

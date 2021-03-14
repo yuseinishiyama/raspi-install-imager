@@ -26,6 +26,7 @@ type config struct {
 	Shared struct {
 		User        string
 		PublicKeys  []string `yaml:"ssh_public_keys"`
+		Gateway4    string
 		Nameservers Nameservers
 	}
 }
@@ -65,6 +66,7 @@ func execute() {
 
 	networkConfig := networkConfig{
 		Addresses:   host.Addresses,
+		Gateway4:    conf.Shared.Gateway4,
 		Nameservers: conf.Shared.Nameservers,
 	}
 	if err := generate("templates/network-config", networkConfig, outputDir); err != nil {
