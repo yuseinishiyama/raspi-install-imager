@@ -1,8 +1,8 @@
-VERSION := 20.10
+VERSION ?= 20.10
 PREINSTALLED_IMAGE := ubuntu-$(VERSION)-preinstalled-server-arm64+raspi.img
 DOWNLAOD_URL := http://cdimage.ubuntu.com/releases/$(VERSION)/release/$(PREINSTALLED_IMAGE).xz
 
-HOST =? $(error HOST must be set)
+HOST ?= $(error HOST must be set)
 
 default: write
 
