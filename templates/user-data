@@ -9,6 +9,8 @@ ssh_pwauth: true
 
 users:
 - name: {{ .User }}
-  sudo:  ALL=(ALL) NOPASSWD:ALL
+  sudo: ALL=(ALL) NOPASSWD:ALL
   ssh_authorized_keys:
-  - {{ .PublicKey }}
+{{- range $i, $publicKey := .PublicKeys }}
+  - {{ $publicKey }}
+{{- end }}

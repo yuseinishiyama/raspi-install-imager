@@ -8,8 +8,8 @@ import (
 )
 
 type userData struct {
-	User      string
-	PublicKey string
+	User       string
+	PublicKeys []string
 }
 
 func (n userData) generate(dir string) error {

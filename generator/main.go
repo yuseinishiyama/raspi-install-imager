@@ -14,15 +14,19 @@ const (
 )
 
 var (
-	hostname  string
-	user      string
-	publicKey string
-	output    string
+	hostname string
+	output   string
 )
 
-type config map[string]struct {
-	IP     string
-	Master bool
+type config struct {
+	Hosts map[string]struct {
+		IP     string
+		Master bool
+	}
+	Shared struct {
+		User       string
+		PublicKeys []string `yaml:"ssh_public_keys"`
+	}
 }
 
 func main() {
@@ -35,8 +39,6 @@ func main() {
 	}
 
 	rootCmd.Flags().StringVar(&hostname, "host", "", "host name")
-	rootCmd.Flags().StringVarP(&user, "user", "u", "", "admin user name")
-	rootCmd.Flags().StringVarP(&publicKey, "publicKey", "k", "", "ssh public key")
 	rootCmd.Flags().StringVarP(&output, "output", "o", "gen", "root output directory")
 
 	rootCmd.Execute()
@@ -53,7 +55,7 @@ func execute() {
 		log.Fatalf("failed to unmarshal %s. %v", ConfigFile, err)
 	}
 
-	host, ok := conf[hostname]
+	host, ok := conf.Hosts[hostname]
 	if !ok {
 		log.Fatalf("hostname %s is not defined in %s", hostname, ConfigFile)
 	}
@@ -65,7 +67,7 @@ func execute() {
 		log.Fatalf("failed to render network-config. %v", err)
 	}
 
-	userData := userData{User: user, PublicKey: publicKey}
+	userData := userData{User: conf.Shared.User, PublicKeys: conf.Shared.PublicKeys}
 	if err := userData.generate(outputDir); err != nil {
 		log.Fatalf("failed to render user-data. %v", err)
 	}
