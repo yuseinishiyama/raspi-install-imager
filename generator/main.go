@@ -64,18 +64,18 @@ func execute() {
 	outputDir := path.Join(output, hostname)
 
 	networkConfig := networkConfig{
-		Addresses: host.Addresses,
+		Addresses:   host.Addresses,
 		Nameservers: conf.Shared.Nameservers,
 	}
-	if err := networkConfig.generate(outputDir); err != nil {
+	if err := generate("templates/network-config", networkConfig, outputDir); err != nil {
 		log.Fatalf("failed to render network-config. %v", err)
 	}
 
 	userData := userData{
-		User: conf.Shared.User,
+		User:       conf.Shared.User,
 		PublicKeys: conf.Shared.PublicKeys,
 	}
-	if err := userData.generate(outputDir); err != nil {
+	if err := generate("templates/user-data", userData, outputDir); err != nil {
 		log.Fatalf("failed to render user-data. %v", err)
 	}
 }
