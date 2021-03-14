@@ -2,13 +2,13 @@ VERSION= 20.10
 PREINSTALLED_IMAGE = ubuntu-$(VERSION)-preinstalled-server-arm64+raspi.img
 DOWNLAOD_URL = http://cdimage.ubuntu.com/releases/$(VERSION)/release/$(PREINSTALLED_IMAGE).xz
 
-USER = yuseinishiyama
+USER = $(shell whoami)
 HOST = pi1
 
 default: write
 
 gen/$(HOST):
-	go run ./generator
+	go run ./generator --host $(HOST) -u $(USER)
 
 image/$(PREINSTALLED_IMAGE):
 	curl $(DOWNLAOD_URL) -o - | unxz > $@

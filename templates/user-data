@@ -2,13 +2,13 @@
 chpasswd:
   expire: true
   list:
-  - ADMIN:ADMIN
+  - {{ .User }}:{{ .User }}
 
 # Enable password authentication with the SSH daemon
 ssh_pwauth: true
 
 users:
-- name: ADMIN
-  groups: users
+- name: {{ .User }}
+  sudo:  ALL=(ALL) NOPASSWD:ALL
   ssh_authorized_keys:
-  - SSH_PUBLIC_KEY
+  - {{ .PublicKey }}

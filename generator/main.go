@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 	"log"
+	"path"
 
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
@@ -36,7 +37,7 @@ func main() {
 	rootCmd.Flags().StringVar(&hostname, "host", "", "host name")
 	rootCmd.Flags().StringVarP(&user, "user", "u", "", "admin user name")
 	rootCmd.Flags().StringVarP(&publicKey, "publicKey", "k", "", "ssh public key")
-	rootCmd.Flags().StringVarP(&output, "output", "o", "", "output directory")
+	rootCmd.Flags().StringVarP(&output, "output", "o", "gen", "root output directory")
 
 	rootCmd.Execute()
 }
@@ -57,9 +58,15 @@ func execute() {
 		log.Fatalf("hostname %s is not defined in %s", hostname, ConfigFile)
 	}
 
-	networkConfig := networkConfig{ip: host.IP}
-	userData := userData{user: user, publicKey: publicKey}
+	outputDir := path.Join(output, hostname)
 
-	networkConfig.generate(output)
-	userData.generate(output)
+	networkConfig := networkConfig{IP: host.IP}
+	if err := networkConfig.generate(outputDir); err != nil {
+		log.Fatalf("failed to render network-config. %v", err)
+	}
+
+	userData := userData{User: user, PublicKey: publicKey}
+	if err := userData.generate(outputDir); err != nil {
+		log.Fatalf("failed to render user-data. %v", err)
+	}
 }

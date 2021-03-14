@@ -1,0 +1,14 @@
+# On first boot, set the admin user's password that must change
+chpasswd:
+  expire: true
+  list:
+  - user:user
+
+# Enable password authentication with the SSH daemon
+ssh_pwauth: true
+
+users:
+- name: user
+  sudo:  ALL=(ALL) NOPASSWD:ALL
+  ssh_authorized_keys:
+  - 
