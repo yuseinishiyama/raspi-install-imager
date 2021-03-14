@@ -7,7 +7,7 @@ HOST =? $(error HOST must be set)
 default: write
 
 gen/$(HOST):
-	go run ./generator --host $(HOST)
+	go run ./generator -c samples/config.yml --host $(HOST)
 
 image/$(PREINSTALLED_IMAGE):
 	curl $(DOWNLAOD_URL) -o - | unxz > $@

@@ -9,13 +9,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-const (
-	ConfigFile = "config.yml"
-)
-
 var (
-	hostname string
-	output   string
+	configPath string
+	hostname   string
+	output     string
 )
 
 type config struct {
@@ -40,6 +37,7 @@ func main() {
 		},
 	}
 
+	rootCmd.Flags().StringVarP(&configPath, "config", "c", "config.yml", "configuration file")
 	rootCmd.Flags().StringVar(&hostname, "host", "", "host name")
 	rootCmd.Flags().StringVarP(&output, "output", "o", "gen", "root output directory")
 
@@ -47,19 +45,19 @@ func main() {
 }
 
 func execute() {
-	bytes, err := ioutil.ReadFile(ConfigFile)
+	bytes, err := ioutil.ReadFile(configPath)
 	if err != nil {
-		log.Fatalf("failed to read %s. %v", ConfigFile, err)
+		log.Fatalf("failed to read %s. %v", configPath, err)
 	}
 
 	conf := config{}
 	if err := yaml.Unmarshal(bytes, &conf); err != nil {
-		log.Fatalf("failed to unmarshal %s. %v", ConfigFile, err)
+		log.Fatalf("failed to unmarshal %s. %v", configPath, err)
 	}
 
 	host, ok := conf.Hosts[hostname]
 	if !ok {
-		log.Fatalf("hostname %s is not defined in %s", hostname, ConfigFile)
+		log.Fatalf("hostname %s is not defined in %s", hostname, configPath)
 	}
 
 	outputDir := path.Join(output, hostname)
