@@ -1,0 +1,8 @@
+hosts:
+- name: pi1
+  ip: 192.168.2.129
+  master: true
+- name: pi2
+  ip: 192.168.2.130
+- name: pi3
+  ip: 192.168.2.131

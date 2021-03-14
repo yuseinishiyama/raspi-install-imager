@@ -1,0 +1,24 @@
+VERSION= 20.10
+PREINSTALLED_IMAGE = ubuntu-$(VERSION)-preinstalled-server-arm64+raspi.img
+DOWNLAOD_URL = http://cdimage.ubuntu.com/releases/$(VERSION)/release/$(PREINSTALLED_IMAGE).xz
+
+USER = yuseinishiyama
+HOST = pi1
+
+default: write
+
+gen/$(HOST):
+	touch $@
+	echo "TODO: generate cloud-init configs" > $@
+
+image/$(PREINSTALLED_IMAGE):
+	curl $(DOWNLAOD_URL) -o - | unxz > $@
+
+image/$(HOST): image/$(PREINSTALLED_IMAGE) gen/$(HOST)
+	touch $@
+	echo "TODO: customized boot image" > $@
+
+write: image/$(HOST)
+	@echo "TODO: write image to disk"
+
+.PHONY: write
