@@ -10,6 +10,8 @@ network:
       gateway4: 192.168.2.1
       nameservers:
         addresses:
-        - 192.168.2.1
+        {{- range $i, $address := .Nameservers.Addresses }}
+        - {{ $address }}
+        {{- end }}
         search:
         - Speedport_W_724V_Typ_A_05011603_06_003

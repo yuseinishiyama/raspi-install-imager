@@ -24,8 +24,9 @@ type config struct {
 		Master    bool
 	}
 	Shared struct {
-		User       string
-		PublicKeys []string `yaml:"ssh_public_keys"`
+		User        string
+		PublicKeys  []string `yaml:"ssh_public_keys"`
+		Nameservers Nameservers
 	}
 }
 
@@ -62,12 +63,18 @@ func execute() {
 
 	outputDir := path.Join(output, hostname)
 
-	networkConfig := networkConfig{Addresses: host.Addresses}
+	networkConfig := networkConfig{
+		Addresses: host.Addresses,
+		Nameservers: conf.Shared.Nameservers,
+	}
 	if err := networkConfig.generate(outputDir); err != nil {
 		log.Fatalf("failed to render network-config. %v", err)
 	}
 
-	userData := userData{User: conf.Shared.User, PublicKeys: conf.Shared.PublicKeys}
+	userData := userData{
+		User: conf.Shared.User,
+		PublicKeys: conf.Shared.PublicKeys,
+	}
 	if err := userData.generate(outputDir); err != nil {
 		log.Fatalf("failed to render user-data. %v", err)
 	}
