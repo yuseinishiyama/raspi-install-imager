@@ -1,4 +1,16 @@
-# On first boot, set the admin user's password that must change
+package generate
+
+type UserData struct {
+	User       string
+	PublicKeys []string
+}
+
+func (n UserData) Name() string {
+	return "user-data"
+}
+
+func (n UserData) Template() string {
+	return `# On first boot, set the admin user's password that must change
 chpasswd:
   expire: true
   list:
@@ -14,3 +26,5 @@ users:
   {{- range $i, $publicKey := .PublicKeys }}
   - {{ $publicKey }}
   {{- end }}
+`
+}

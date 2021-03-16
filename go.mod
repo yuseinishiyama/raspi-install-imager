@@ -1,4 +1,4 @@
-module github.com/yuseinishiyama/home
+module github.com/yuseinishiyama/raspi-image-installer
 
 go 1.16
 
