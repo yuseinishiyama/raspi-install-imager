@@ -28,12 +28,16 @@ func Command() *cobra.Command {
 
 	cmd.Flags().StringVarP(&gen.configPath, "config", "c", "config.yml", "configuration file")
 	cmd.Flags().StringVar(&gen.hostname, "host", "", "host name")
-	cmd.Flags().StringVarP(&gen.output, "output", "o", "gen", "root output directory")
+	cmd.Flags().StringVarP(&gen.output, "output", "o", "", "root output directory")
 
 	return cmd
 }
 
 func (g *generate) Execute() {
+	if len(g.output) == 0 {
+		log.Fatal("--output must be specified")
+	}
+
 	bytes, err := ioutil.ReadFile(g.configPath)
 	if err != nil {
 		log.Fatalf("failed to read %s. %v", g.configPath, err)

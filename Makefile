@@ -1,32 +1,11 @@
-VERSION ?= 20.10
-PREINSTALLED_IMAGE := ubuntu-$(VERSION)-preinstalled-server-arm64+raspi.img
-DOWNLAOD_URL := http://cdimage.ubuntu.com/releases/$(VERSION)/release/$(PREINSTALLED_IMAGE).xz
+gen-config:
+	go run ./cmd/raspi-install-imager generate --host pi1 -c samples/config.yml -o artifacts
+	go run ./cmd/raspi-install-imager generate --host pi2 -c samples/config.yml -o artifacts
+	go run ./cmd/raspi-install-imager generate --host pi3 -c samples/config.yml -o artifacts
 
-HOST ?= $(error HOST must be set)
-MOUNTPOINT ?= mnt
+gen-image: gen-config
+	go run ./cmd/raspi-install-imager image -o artifacts/pi1.img -c artifacts/pi1 -m mnt
+#	go run ./cmd/raspi-install-imager image -o artifacts/pi2.img -c artifacts/pi2 -m mnt
+#	go run ./cmd/raspi-install-imager image -o artifacts/pi3.img -c artifacts/pi3 -m mnt
 
-default: write
-
-gen/$(HOST):
-	go run ./generator -c samples/config.yml --host $(HOST)
-
-image/$(PREINSTALLED_IMAGE):
-	curl $(DOWNLAOD_URL) -o - | unxz > $@
-
-image/$(HOST).img: image/$(PREINSTALLED_IMAGE) gen/$(HOST)
-	cp $< $@
-	@echo mounting image...
-	hdiutil attach -mountpoint $(MOUNTPOINT) $@ 1>/dev/null
-	@echo enabling ssh...
-	touch $(MOUNTPOINT)/ssh
-	@echo enabling cgroup...
-	sed -i "~" '1s/$$/ cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory/' $(MOUNTPOINT)/cmdline.txt
-	@echo overwriting cloud-init configs...
-	cp -b $(word 2,$^)/* $(MOUNTPOINT)
-	@echo unmounting image...
-	hdiutil detach $(MOUNTPOINT)
-
-write: image/$(HOST)
-	@echo "TODO: write image to disk"
-
-.PHONY: write
+.PHONY: gen-config gen-image
