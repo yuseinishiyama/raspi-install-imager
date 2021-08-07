@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/yuseinishiyama/raspi-image-installer/pkg/generate"
 	"github.com/yuseinishiyama/raspi-image-installer/pkg/image"
+	"github.com/yuseinishiyama/raspi-image-installer/pkg/write"
 )
 
 func main() {
@@ -13,5 +14,6 @@ func main() {
 	}
 	rootCmd.AddCommand(generate.Command())
 	rootCmd.AddCommand(image.Command())
+	rootCmd.AddCommand(write.Command())
 	rootCmd.Execute()
 }
