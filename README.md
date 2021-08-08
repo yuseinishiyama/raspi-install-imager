@@ -1,8 +1,17 @@
 # raspi-install-imager
 
-Generate your Raspberry Pi install image out of YAML
+Generate your Raspberry Pi install image out of a YAML file. **This supports only macOS**.
 
-_NOTE: This project is WIP and works only partially._
+```bash
+# Generate cloud-init config files
+raspi-install-imager generate --host pi1 -c config.yml -o artifacts
+
+# Download the install image and make necessary modifications
+raspi-install-imager image -o artifacts/pi1.img -c artifacts/pi1 -m mnt
+
+# Write it to a disk (e.g. SD card)
+raspi-install-imager write -d /dev/disk2 -i artifacts/pi1.img
+```
 
 ## What
 
@@ -17,7 +26,6 @@ Setting up Raspberry Pi is tedious especially when you have a cluster. Instead, 
 - [x] Enabling SSH
 - [x] Enabling cgroup
 - [x] Static IPs
-- [x] Custom default user
-- [ ] Hostname
-- [ ] HDMI settings
-- [ ] Kubernetes
+- [x] Custom user
+- [x] Hostname
+- [x] Kubernetes
