@@ -2,13 +2,13 @@ package generate
 
 type config struct {
 	Hosts map[string]struct {
-		Addresses []string
-		Master    bool
+		Address string
 	}
 	Shared struct {
-		User        string
-		PublicKeys  []string `yaml:"ssh_public_keys"`
-		Gateway4    string
-		Nameservers Nameservers
+		User         string
+		PublicKeys   []string `yaml:"ssh_public_keys"`
+		PrefixLength int      `yaml:"prefix_length"`
+		Gateway4     string
+		Nameserver   Nameserver
 	}
 }

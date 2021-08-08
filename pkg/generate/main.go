@@ -56,9 +56,10 @@ func (g *generate) Execute() {
 	outputDir := path.Join(g.output, g.hostname)
 
 	networkConfig := NetworkConfig{
-		Addresses:   host.Addresses,
-		Gateway4:    conf.Shared.Gateway4,
-		Nameservers: conf.Shared.Nameservers,
+		Address:      host.Address,
+		PrefixLength: conf.Shared.PrefixLength,
+		Gateway4:     conf.Shared.Gateway4,
+		Nameserver:   conf.Shared.Nameserver,
 	}
 
 	userData := UserData{

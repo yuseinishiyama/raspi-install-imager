@@ -1,14 +1,15 @@
 package generate
 
 type NetworkConfig struct {
-	Addresses   []string
-	Gateway4    string
-	Nameservers Nameservers
+	Address      string
+	PrefixLength int
+	Gateway4     string
+	Nameserver   Nameserver
 }
 
-type Nameservers struct {
-	Addresses []string
-	Search    []string
+type Nameserver struct {
+	Address string
+	Search  string
 }
 
 func (n NetworkConfig) Name() string {
@@ -21,18 +22,12 @@ ethernets:
   eth0:
     dhcp4: false
     addresses:
-    {{- range $i, $address := .Addresses }}
-    - {{ $address }}
-    {{- end }}
+    - {{ .Address }}/{{ .PrefixLength }}
     gateway4: {{ .Gateway4 }}
     nameservers:
       addresses:
-      {{- range $i, $address := .Nameservers.Addresses }}
-      - {{ $address }}
-      {{- end }}
+      - {{ .Nameserver.Address }}
       search:
-      {{- range $i, $search := .Nameservers.Search }}
-      - {{ $search }}
-      {{- end }}
+      - {{ .Nameserver.Search }}
 `
 }
