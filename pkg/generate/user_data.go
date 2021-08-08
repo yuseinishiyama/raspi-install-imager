@@ -1,6 +1,7 @@
 package generate
 
 type UserData struct {
+	Host       string
 	User       string
 	PublicKeys []string
 }
@@ -11,6 +12,8 @@ func (n UserData) Name() string {
 
 func (n UserData) Template() string {
 	return `#cloud-config
+
+hostname: {{ .Host }}
 
 # On first boot, set the admin user's password that must change
 chpasswd:

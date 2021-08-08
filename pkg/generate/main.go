@@ -62,6 +62,7 @@ func (g *generate) Execute() {
 	}
 
 	userData := UserData{
+		Host:       g.hostname,
 		User:       conf.Shared.User,
 		PublicKeys: conf.Shared.PublicKeys,
 	}
