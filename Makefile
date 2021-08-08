@@ -1,11 +1,10 @@
-gen-config:
-	go run ./cmd/raspi-install-imager generate --host pi1 -c samples/config.yml -o artifacts
-	go run ./cmd/raspi-install-imager generate --host pi2 -c samples/config.yml -o artifacts
-	go run ./cmd/raspi-install-imager generate --host pi3 -c samples/config.yml -o artifacts
+TARGET_DISK ?= /dev/disk2
+HOSTS := pi1 pi2 pi3
+WRITE_TARGETS := $(patsubst %,%.write,$(HOSTS))
 
-gen-image: gen-config
-	go run ./cmd/raspi-install-imager image -o artifacts/pi1.img -c artifacts/pi1 -m mnt
-#	go run ./cmd/raspi-install-imager image -o artifacts/pi2.img -c artifacts/pi2 -m mnt
-#	go run ./cmd/raspi-install-imager image -o artifacts/pi3.img -c artifacts/pi3 -m mnt
+$(HOSTS):
+	go run ./cmd/raspi-install-imager generate --host $@ -c samples/config.yml -o artifacts
+	go run ./cmd/raspi-install-imager image -o artifacts/$@.img -c artifacts/$@ -m mnt
 
-.PHONY: gen-config gen-image
+%.write: %
+	go run ./cmd/raspi-install-imager write -d $(TARGET_DISK) -i artifacts/$<.img
