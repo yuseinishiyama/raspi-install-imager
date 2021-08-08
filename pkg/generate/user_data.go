@@ -30,8 +30,7 @@ users:
   # groups assigned to the ubuntu default user
   groups: [adm, dialout, cdrom, floppy, sudo, audio, dip, video, plugdev, netdev, lxd]
   sudo: ALL=(ALL) NOPASSWD:ALL
-  ssh_import_id:
-  - gh:{{ .User }}
+  ssh_import_id: gh:{{ .User }}
 
 runcmd:
 {{- if .MasterAddress }}

@@ -47,7 +47,7 @@ func (w *write) Execute() {
 		"dd",
 		"bs=1M",
 		fmt.Sprintf("if=%s", w.image),
-		fmt.Sprintf("of=%s", w.disk),
+		fmt.Sprintf("of=%s", rawName),
 	).CombinedOutput()
 
 	if err != nil {
