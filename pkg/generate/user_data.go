@@ -4,7 +4,6 @@ type UserData struct {
 	Host          string
 	User          string
 	MasterAddress string
-	PublicKeys    []string
 }
 
 func (n UserData) Name() string {

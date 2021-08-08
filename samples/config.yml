@@ -8,8 +8,6 @@ hosts:
     address: 192.168.2.131
 shared:
   user: yuseinishiyama
-  ssh_public_keys:
-    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCZ3FQ7ABA8HiMDmEXv6mBlg2Qsf8OBtO1sSnj234bRashexLUKYNL9aoHCd5xAScm0qhDw2H2wZDHGA3yXk/DzLdYSvZdFxt9eLnyUJoFF4WvSx5BN4E63lzCuVHsGzaOZnfqL07fnG+Z9nsDx6cq3g+VXpZUAcnZLRPZuahZjh9YcpMO6YbDT6eBEEfyuMX7UnF90TTS/ly6xv841T7pMT93wGp5YDCLQTug/3P3tsV2LzesJP2PsV+THyaMVAcaK6b+zckhb3Ja5CgdcO9n1J9LuT50i7yHbwzhIvqut08G0FWOEjyBP42KfJuSiUsXx+jZWUDzCyLDnzg1PEcSVD4Gr80N+02SoO++Qw1IxhaYI8V5J1sMFahi3JhB9ufjl0GleDtTh0iQj5/qV8QW93XDHGISZdmCeRKgFuTap054TPCXnMODHB/DMAB0oi2UxWV7d86BVh4PCnJeOsaNIB8Tjph4Nw355nD2U6QFYmm0MT/nomJyHAONfpl+PLSNrKA3rCXdT+AMAc4a1BbOUSLNMOs2d7JDfYar4Jg2U4OIU/vLNkjAGRWBXxpNJvZdm+vCCskCVwwBsePeQIRT35IkQ45r2pgXpYhDlgIae9z+mqzP87b7DV6sLhTkUVv32gPCkkwH9uDsaRLwISr9jqJKlTxmuoMntemYMfE1ogw== allegllet.scherzand@gmail.com
   prefix_length: 24
   gateway4: 192.168.2.1
   nameserver:

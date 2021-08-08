@@ -78,7 +78,6 @@ func (g *generate) Execute() {
 		Host:          g.hostname,
 		User:          conf.Shared.User,
 		MasterAddress: masterAddr,
-		PublicKeys:    conf.Shared.PublicKeys,
 	}
 
 	for _, template := range []templating{networkConfig, userData} {
