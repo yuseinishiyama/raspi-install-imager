@@ -3,6 +3,7 @@ package generate
 type config struct {
 	Hosts map[string]struct {
 		Address string
+		Master  bool
 	}
 	Shared struct {
 		User         string

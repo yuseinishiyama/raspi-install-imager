@@ -53,6 +53,18 @@ func (g *generate) Execute() {
 		log.Fatalf("hostname %q is not defined in %s", g.hostname, g.configPath)
 	}
 
+	var masterAddr string
+	for _, e := range conf.Hosts {
+		if e.Master {
+			masterAddr = e.Address
+		}
+	}
+
+	// unset master address if it's the master
+	if masterAddr == host.Address {
+		masterAddr = ""
+	}
+
 	outputDir := path.Join(g.output, g.hostname)
 
 	networkConfig := NetworkConfig{
@@ -63,9 +75,10 @@ func (g *generate) Execute() {
 	}
 
 	userData := UserData{
-		Host:       g.hostname,
-		User:       conf.Shared.User,
-		PublicKeys: conf.Shared.PublicKeys,
+		Host:          g.hostname,
+		User:          conf.Shared.User,
+		MasterAddress: masterAddr,
+		PublicKeys:    conf.Shared.PublicKeys,
 	}
 
 	for _, template := range []templating{networkConfig, userData} {

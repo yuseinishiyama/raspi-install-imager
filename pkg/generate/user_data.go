@@ -1,9 +1,10 @@
 package generate
 
 type UserData struct {
-	Host       string
-	User       string
-	PublicKeys []string
+	Host          string
+	User          string
+	MasterAddress string
+	PublicKeys    []string
 }
 
 func (n UserData) Name() string {
@@ -31,5 +32,12 @@ users:
   sudo: ALL=(ALL) NOPASSWD:ALL
   ssh_import_id:
   - gh:{{ .User }}
+
+runcmd:
+{{- if .MasterAddress }}
+  - curl -sfL https://get.k3s.io | K3S_URL=https://{{ .MasterAddress }}:6443 K3S_TOKEN=token sh -
+{{ else }}
+  - curl -sfL https://get.k3s.io | K3S_TOKEN=token sh -
+{{- end }}
 `
 }
