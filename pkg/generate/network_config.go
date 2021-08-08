@@ -16,24 +16,23 @@ func (n NetworkConfig) Name() string {
 }
 
 func (n NetworkConfig) Template() string {
-	return `network:
-  version: 2
-  ethernets:
-    eth0:
-      dhcp4: false
+	return `version: 2
+ethernets:
+  eth0:
+    dhcp4: false
+    addresses:
+    {{- range $i, $address := .Addresses }}
+    - {{ $address }}
+    {{- end }}
+    gateway4: {{ .Gateway4 }}
+    nameservers:
       addresses:
-      {{- range $i, $address := .Addresses }}
+      {{- range $i, $address := .Nameservers.Addresses }}
       - {{ $address }}
       {{- end }}
-      gateway4: {{ .Gateway4 }}
-      nameservers:
-        addresses:
-        {{- range $i, $address := .Nameservers.Addresses }}
-        - {{ $address }}
-        {{- end }}
-        search:
-        {{- range $i, $search := .Nameservers.Search }}
-        - {{ $search }}
-        {{- end }}
+      search:
+      {{- range $i, $search := .Nameservers.Search }}
+      - {{ $search }}
+      {{- end }}
 `
 }

@@ -10,7 +10,9 @@ func (n UserData) Name() string {
 }
 
 func (n UserData) Template() string {
-	return `# On first boot, set the admin user's password that must change
+	return `#cloud-config
+
+# On first boot, set the admin user's password that must change
 chpasswd:
   expire: true
   list:
