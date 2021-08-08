@@ -16,16 +16,18 @@ func (n UserData) Template() string {
 
 hostname: {{ .Host }}
 
-# On first boot, set the admin user's password that must change
+# On first boot, set the (default) ubuntu user's password to "ubuntu" and
+# expire user passwords
 chpasswd:
   expire: true
   list:
-  - {{ .User }}:{{ .User }}
+  - ubuntu:ubuntu
 
-# Enable password authentication with the SSH daemon
-ssh_pwauth: true
+# Disable password authentication with the SSH daemon
+ssh_pwauth: false
 
 users:
+- default
 - name: {{ .User }}
   # groups assigned to the ubuntu default user
   groups: [adm, dialout, cdrom, floppy, sudo, audio, dip, video, plugdev, netdev, lxd]
