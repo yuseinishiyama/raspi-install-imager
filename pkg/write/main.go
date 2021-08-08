@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 
 	"github.com/spf13/cobra"
@@ -39,7 +40,8 @@ func (w *write) Execute() {
 
 	exec.Command("diskutil", "unmountDisk", w.disk).Run()
 
-	log.Printf("copying %s to %s", w.image, w.disk)
+	rawName := filepath.Join(filepath.Dir(w.disk), "r" + filepath.Base(w.disk))
+	log.Printf("copying %s to %s", w.image, rawName)
 	out, err := exec.Command(
 		"sudo",
 		"dd",
